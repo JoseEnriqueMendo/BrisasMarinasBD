@@ -1,11 +1,11 @@
-const categoryService = require("../services/category");
-const ServiceResponse = require("../entities/serviceResponse");
+const categoryService = require('../services/category');
+const ServiceResponse = require('../entities/ServiceResponse');
 
 const categoryController = {
   list: async () => {
     const responseData = await categoryService.list();
     if (!responseData.data) {
-      responseData.setErrorResponse("No hay registros de categorías", 400);
+      responseData.setErrorResponse('No hay registros de categorías', 400);
       return responseData;
     }
 
@@ -14,15 +14,12 @@ const categoryController = {
   count: async () => {
     const response = await categoryService.count();
 
-    if (response.data.count === "0") {
-      response.setSucessResponse(
-        "No hay categorías en la base de datos",
-        false
-      );
+    if (response.data.count === '0') {
+      response.setSucessResponse('No hay categorías en la base de datos', false);
       return response;
     }
 
-    response.setSucessResponse("Categoría(s) encontradas", true);
+    response.setSucessResponse('Categoría(s) encontradas', response.data.count);
     return response;
   },
 
@@ -47,7 +44,7 @@ const categoryController = {
     const idResponse = await categoryService.obtenerIdPorNombre(name);
 
     if (!idResponse.data) {
-      idResponse.setErrorResponse("ERROR", 401);
+      idResponse.setErrorResponse('ERROR', 401);
     }
 
     return idResponse;
@@ -62,8 +59,6 @@ const categoryController = {
     const nameResponse = await categoryService.listPorCantidad(num);
     return nameResponse;
   },
-
-
 };
 
 module.exports = categoryController;

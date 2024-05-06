@@ -1,22 +1,21 @@
-const router = require("express").Router();
-const pool = require("../db");
-const userController = require("../controllers/user");
-const authorize = require("../middleware/User/authorize");
-const validInfo = require("../middleware/User/validInfo");
+const router = require('express').Router();
+const pool = require('../db');
+const userController = require('../controllers/user');
+const authorize = require('../middleware/User/authorize');
+const validInfo = require('../middleware/User/validInfo');
 
-router.get("/count", async (req, res) => {
+router.get('/count', async (req, res) => {
   const responseCount = await userController.count();
   res.send(responseCount);
 });
 
-router.get("/all", async (req, res) => {
+router.get('/all', async (req, res) => {
   const responseShowData = await userController.list();
   res.send(responseShowData);
 });
 
-router.post("/register", async (req, res) => {
-  const { name, lastname, gender, email, dni, phone, password, role } =
-    req.body;
+router.post('/register', async (req, res) => {
+  const { name, lastname, gender, email, dni, phone, password, role } = req.body;
 
   const registerResponse = await userController.register(
     name,
@@ -32,7 +31,7 @@ router.post("/register", async (req, res) => {
   res.send(registerResponse);
 });
 
-router.post("/login", validInfo, async (req, res) => {
+router.post('/login', validInfo, async (req, res) => {
   const { email, password } = req.body;
 
   const loginResponse = await userController.login(email, password);
@@ -40,7 +39,7 @@ router.post("/login", validInfo, async (req, res) => {
   res.send(loginResponse);
 });
 
-router.post("/loginCliente", validInfo, async (req, res) => {
+router.post('/loginCliente', validInfo, async (req, res) => {
   const { email, password } = req.body;
 
   const loginResponse = await userController.loginCliente(email, password);
@@ -48,37 +47,30 @@ router.post("/loginCliente", validInfo, async (req, res) => {
   res.send(loginResponse);
 });
 
-router.get("/verify", authorize, (req, res) => {
+router.get('/verify', authorize, (req, res) => {
   res.json(true);
 });
 
-router.get("/getName", authorize, async (req, res) => {
+router.get('/getName', authorize, async (req, res) => {
   const response = await userController.showName(req.user);
   res.send(response);
 });
 
-router.post("/delete", async (req, res) => {
+router.delete('/delete', async (req, res) => {
   const { id } = req.body;
   const responseDelete = await userController.delete(id);
   res.send(responseDelete);
 });
 
-router.post("/getUserbyEmail", async (req, res) => {
+router.get('/getUserbyEmail', async (req, res) => {
   const { email } = req.body;
   const response = await userController.obtenerUsuario(email);
   res.send(response);
 });
 
-router.post("/edit", async (req, res) => {
+router.put('/edit', async (req, res) => {
   const { name, lastname, email, dni, phone, id } = req.body;
-  const responseEdit = await userController.edit(
-    name,
-    lastname,
-    email,
-    dni,
-    phone,
-    id
-  );
+  const responseEdit = await userController.edit(name, lastname, email, dni, phone, id);
   res.send(responseEdit);
 });
 
