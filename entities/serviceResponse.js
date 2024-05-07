@@ -1,3 +1,4 @@
+//Clase ServiceResponse
 class ServiceResponse {
   constructor() {
     this.success = false;
