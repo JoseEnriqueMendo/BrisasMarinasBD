@@ -42,14 +42,14 @@ router.delete('/delete', async (req, res) => {
   res.send(responseDelete);
 });
 
-router.get('/listPorCantidad', async (req, res) => {
-  const { num } = req.body;
+router.get('/listPorCantidad/:num', async (req, res) => {
+  const { num } = req.params;
   const response = await dishesController.listPorCantidad(num);
   res.send(response);
 });
 
-router.get('/selectDishes', async (req, res) => {
-  const { name } = req.body;
+router.get('/selectDishes/:name', async (req, res) => {
+  const { name } = req.params;
   const responseSelect = await dishesController.selectDishes(name);
   res.send(responseSelect);
 });

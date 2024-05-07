@@ -52,17 +52,16 @@ ALTER TABLE "user"
 ADD CONSTRAINT id_profile FOREIGN KEY (id_profile) REFERENCES profile(id);
 
 ALTER TABLE platillo
-ADD CONSTRAINT id_categoria FOREIGN KEY (id_categoria) REFERENCES category(id);
+ADD CONSTRAINT id_categoria FOREIGN KEY (id_categoria) REFERENCES category(id) ON DELETE SET NULL;
 
 ALTER TABLE factura
-ADD CONSTRAINT id_usuario FOREIGN KEY (id_usuario) REFERENCES "user"(id);
+ADD CONSTRAINT id_usuario FOREIGN KEY (id_usuario) REFERENCES "user"(id) ON DELETE SET NULL ;
 
 ALTER TABLE pedido
-ADD CONSTRAINT id_factura FOREIGN KEY (id_factura) REFERENCES factura(id);
+ADD CONSTRAINT id_factura FOREIGN KEY (id_factura) REFERENCES factura(id) ON DELETE SET NULL;
 
 ALTER TABLE pedido
-ADD CONSTRAINT id_platillo FOREIGN KEY (id_platillo) REFERENCES platillo(id);
-
+ADD CONSTRAINT id_platillo FOREIGN KEY (id_platillo) REFERENCES platillo(id) ON DELETE SET NULL;
 
 INSERT INTO profile (code) VALUES ('ADM');
 INSERT INTO profile (code) VALUES ('CLI');

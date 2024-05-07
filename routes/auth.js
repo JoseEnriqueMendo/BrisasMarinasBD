@@ -62,8 +62,8 @@ router.delete('/delete', async (req, res) => {
   res.send(responseDelete);
 });
 
-router.get('/getUserbyEmail', async (req, res) => {
-  const { email } = req.body;
+router.get('/getUserbyEmail/:email', async (req, res) => {
+  const { email } = req.params;
   const response = await userController.obtenerUsuario(email);
   res.send(response);
 });

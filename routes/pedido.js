@@ -12,8 +12,8 @@ router.post('/create', async (req, res) => {
   res.send(responseCreate);
 });
 
-router.get('/selectPedidoPorUsuario', async (req, res) => {
-  const { id } = req.body;
+router.get('/selectPedidoPorUsuario/:id', async (req, res) => {
+  const { id } = req.params;
   const responseSelect = await pedidoController.listPorUsuario(id);
   res.send(responseSelect);
 });

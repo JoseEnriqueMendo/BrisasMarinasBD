@@ -30,20 +30,20 @@ router.delete('/delete', async (req, res) => {
   res.send(responseDelete);
 });
 
-router.get('/getID', async (req, res) => {
-  const { name } = req.body;
+router.get('/getID/:name', async (req, res) => {
+  const { name } = req.params;
   const response = await categoryController.showName(name);
   res.send(response);
 });
 
-router.get('/getname', async (req, res) => {
-  const { id } = req.body;
+router.get('/getname/:id', async (req, res) => {
+  const { id } = req.params;
   const response = await categoryController.getName(id);
   res.send(response);
 });
 
-router.get('/listPorCantidad', async (req, res) => {
-  const { num } = req.body;
+router.get('/listPorCantidad/:num', async (req, res) => {
+  const { num } = req.params;
   const response = await categoryController.listPorCantidad(num);
   res.send(response);
 });
