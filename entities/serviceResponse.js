@@ -1,4 +1,4 @@
-//Clase ServiceResponse
+//Clase ServiceResponse actualizado
 class ServiceResponse {
   constructor() {
     this.success = false;
