@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const pool = require('../db');
 const userController = require('../controllers/user');
 const authorize = require('../middleware/User/authorize');
 const validInfo = require('../middleware/User/validInfo');
@@ -10,8 +9,19 @@ router.get('/count', async (req, res) => {
 });
 
 router.get('/all', async (req, res) => {
-  const responseShowData = await userController.list();
+  const { num } = req.query;
+  const filtro = num === undefined ? -1 : parseInt(num);
+  const responseShowData = await userController.list(filtro);
   res.send(responseShowData);
+});
+
+router.get('/verify', authorize, (req, res) => {
+  res.json(true);
+});
+
+router.get('/getUser', authorize, async (req, res) => {
+  const response = await userController.getUser(req.user);
+  res.send(response);
 });
 
 router.post('/register', async (req, res) => {
@@ -32,28 +42,9 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', validInfo, async (req, res) => {
-  const { email, password } = req.body;
-
-  const loginResponse = await userController.login(email, password);
-
+  const { email, password, type } = req.body;
+  const loginResponse = await userController.login(email, password, type);
   res.send(loginResponse);
-});
-
-router.post('/loginCliente', validInfo, async (req, res) => {
-  const { email, password } = req.body;
-
-  const loginResponse = await userController.loginCliente(email, password);
-
-  res.send(loginResponse);
-});
-
-router.get('/verify', authorize, (req, res) => {
-  res.json(true);
-});
-
-router.get('/getName', authorize, async (req, res) => {
-  const response = await userController.showName(req.user);
-  res.send(response);
 });
 
 router.delete('/delete', async (req, res) => {
@@ -62,16 +53,17 @@ router.delete('/delete', async (req, res) => {
   res.send(responseDelete);
 });
 
-router.get('/getUserbyEmail/:email', async (req, res) => {
-  const { email } = req.params;
-  const response = await userController.obtenerUsuario(email);
-  res.send(response);
-});
-
 router.put('/edit', async (req, res) => {
   const { name, lastname, email, dni, phone, id } = req.body;
   const responseEdit = await userController.edit(name, lastname, email, dni, phone, id);
   res.send(responseEdit);
+});
+
+// Eliminar
+router.get('/getUserbyEmail/:email', async (req, res) => {
+  const { email } = req.params;
+  const response = await userController.obtenerUsuario(email);
+  res.send(response);
 });
 
 module.exports = router;
