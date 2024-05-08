@@ -61,8 +61,7 @@ const userController = {
 
   login: async (email, password, type) => {
     const responseExists = await userService.obtenerUsuarioPorEmail(email);
-
-    if (!responseExists.success) {
+    if (!responseExists.data) {
       responseExists.setErrorResponse('El email seleccionado no es válido', 401);
       return responseExists;
     }
@@ -75,6 +74,7 @@ const userController = {
       roleResponse.setErrorResponse('No se tiene permisos para acceder a esta página', 401);
       return roleResponse;
     }
+
     const validPassword = await bcrypt.compare(password, responseExists.data.password);
 
     if (!validPassword) {
