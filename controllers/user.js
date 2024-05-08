@@ -62,7 +62,7 @@ const userController = {
   login: async (email, password, type) => {
     const responseExists = await userService.obtenerUsuarioPorEmail(email);
 
-    if (!responseExists.data) {
+    if (!responseExists.success) {
       responseExists.setErrorResponse('El email seleccionado no es válido', 401);
       return responseExists;
     }
